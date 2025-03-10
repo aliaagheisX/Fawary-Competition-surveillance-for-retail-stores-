@@ -1,3 +1,15 @@
+import os
+import sys
+import json
+from pathlib import Path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '.')))
+from constants import TRAIN_PATH, TEST_PATH
+
+import cv2
+import torchvision
+import numpy as np
+from PIL import Image
+
 num_seq_keys = ["frameRate", "seqLength", "imWidth", "imHeight"]
 def get_info_from_seqinfo(vid = "02", path = None) -> dict:
     if path == None:  path = TRAIN_PATH/f"{vid}/seqinfo.ini"
@@ -28,7 +40,7 @@ def get_frame_test(fnum = 1) -> Image:
 # def show_bounding_boxes(frame: Image, boxes: list[list]) -> np.ndarray:
 #     for row in boxes:
 #         [x, y, w, h]
-def show_gt_frame(vid="02", fnum=1, df=df_train) -> np.ndarray:
+def show_gt_frame(vid="02", fnum=1, df=None) -> np.ndarray:
     frame = get_frame(vid, fnum)
     frame = np.array(frame)  # Convert PIL Image to NumPy array if needed
     
@@ -60,3 +72,7 @@ def show_images(x):
     grid_im = Image.fromarray(np.array(grid_im).astype(np.uint8))
     return grid_im
 
+
+if __name__ == "__main__":
+    get_frame().show()
+    get_frame_test().show()
