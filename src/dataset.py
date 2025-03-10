@@ -21,5 +21,3 @@ gt_v05["vid"] = "05"
 
 df_train = pd.concat([gt_v02, gt_v03, gt_v05])
 df_train.columns = ["fnum", "id", "x", "y", "w", "h", "conf", "class", "visibility", "vid"]
-
-df_train.query("fnum > ")
