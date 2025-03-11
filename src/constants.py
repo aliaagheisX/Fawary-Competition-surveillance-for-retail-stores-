@@ -4,6 +4,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent 
 
 DATA_DIR = BASE_DIR / "datasets"
+MODEL_DIR = BASE_DIR / "models"
 TRAIN_PATH = DATA_DIR 
 TEST_PATH = DATA_DIR / "test"
 

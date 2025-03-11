@@ -10,7 +10,7 @@ from dataset import get_vid_img_path, get_vid_gt_path
 from FasterRcnn.inference import *  
 
 import supervision as sv # tracker 
-
+from constants import MODEL_DIR
 
 def get_detections_from_rcnn_results(results):
     boxes = results[0]["boxes"].cpu().numpy()
@@ -30,6 +30,9 @@ def get_rcnn_detections_fn():
     """ return function pass image to get  """
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model  = fasterrcnn_resnet50_fpn(weights=FasterRCNN_ResNet50_FPN_Weights.DEFAULT).to(device)
+    checkpoint = torch.load(MODEL_DIR / "fastrcnn_freeze_8batchs_3epochs.pth")
+    model.load_state_dict(checkpoint['model_state_dict'])
+    
     tracker = sv.ByteTrack() # to track IDs
     
 
