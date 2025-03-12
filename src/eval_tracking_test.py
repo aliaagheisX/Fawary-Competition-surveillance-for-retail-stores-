@@ -15,14 +15,14 @@ import numpy as np
 import pandas as pd
 
 # Fnum, tracker_id, x, y, w, h, confidence, -1, -1, -1
-def predict_video(get_detections_fn):
+def predict_video(get_detections_fn, th=0.5):
     seqlen = len(list(TEST_PATH.rglob("*.jpg")))
     
     data = []
     for frame_num in tqdm(range(1, seqlen + 1)):
         frame = get_frame_test(frame_num)
         
-        detections = get_detections_fn(frame)
+        detections = get_detections_fn(frame, th)
         
         for i in range(len(detections.tracker_id)):
             data.append([
@@ -42,7 +42,7 @@ def predict_video(get_detections_fn):
 
 if __name__ == "__main__":
     get_detections_fn = get_rcnn_detections_fn()
-    df = predict_video(get_detections_fn)
+    df = predict_video(get_detections_fn, th=0.7)
     
-    df.to_csv("fasterrcnn_batch8_freeze_test.csv", header=None, index=None)
+    df.to_csv("fasterrcnn_batch8_freeze_test_th07.csv", header=None, index=None)
     

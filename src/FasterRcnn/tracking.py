@@ -12,12 +12,12 @@ from FasterRcnn.inference import *
 import supervision as sv # tracker 
 from constants import MODEL_DIR
 
-def get_detections_from_rcnn_results(results):
+def get_detections_from_rcnn_results(results, threshold = 0.5):
     boxes = results[0]["boxes"].cpu().numpy()
     labels = results[0]["labels"].cpu().numpy()
     confidence = results[0]["scores"].cpu().numpy()
 
-    mask = (labels == 1) & (confidence > 0.5)
+    mask = (labels == 1) & (confidence >= threshold)
     boxes = boxes[mask]
     labels = labels[mask]
     confidence = confidence[mask]
@@ -36,9 +36,9 @@ def get_rcnn_detections_fn():
     tracker = sv.ByteTrack() # to track IDs
     
 
-    def get_image_detection(image):
+    def get_image_detection(image, threshold = 0.5):
         results = inference(model, image, device)
-        detections = get_detections_from_rcnn_results(results)
+        detections = get_detections_from_rcnn_results(results, threshold)
         detections = tracker.update_with_detections(detections)
         return detections
     
@@ -50,9 +50,9 @@ def draw_rcnn_detections(detections, image):
     
     categories = FasterRCNN_ResNet50_FPN_Weights.DEFAULT.meta["categories"]
     labels = [
-        f"#{tracker_id} {categories[class_id]}"
-        for class_id, tracker_id
-        in zip(detections.class_id, detections.tracker_id)
+        f"#{tracker_id} {conf:.2f}"
+        for conf, tracker_id
+        in zip(detections.confidence, detections.tracker_id)
     ]
     
     annotated_frame = box_annotator.annotate(image.copy(), detections=detections)
