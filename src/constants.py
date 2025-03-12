@@ -11,3 +11,5 @@ TEST_PATH = DATA_DIR / "test"
 assert BASE_DIR.exists(), "Not BASE_DIR exists"
 assert TRAIN_PATH.exists(), "Not TRAIN_PATHexists"
 assert TEST_PATH.exists(), "Not TEST_PATH exists"
+# TRAIN_PATH = Path("/kaggle/input/surveillance-for-retail-stores/tracking/train") 
+# TEST_PATH = Path("/kaggle/input/surveillance-for-retail-stores/tracking/test/01")
