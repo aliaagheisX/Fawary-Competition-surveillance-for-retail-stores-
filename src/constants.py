@@ -13,3 +13,6 @@ assert TRAIN_PATH.exists(), "Not TRAIN_PATHexists"
 assert TEST_PATH.exists(), "Not TEST_PATH exists"
 # TRAIN_PATH = Path("/kaggle/input/surveillance-for-retail-stores/tracking/train") 
 # TEST_PATH = Path("/kaggle/input/surveillance-for-retail-stores/tracking/test/01")
+
+FACE_ID_TRAIN_PATH = DATA_DIR / "face_identification/train"
+FACE_ID_TEST_PATH = DATA_DIR / "face_identification/test"

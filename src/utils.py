@@ -12,6 +12,7 @@ from PIL import Image
 
 num_seq_keys = ["frameRate", "seqLength", "imWidth", "imHeight"]
 def get_info_from_seqinfo(vid = "02", path = None) -> dict:
+    """ read sequence info and return object """
     if path == None:  path = TRAIN_PATH/f"{vid}/seqinfo.ini"
     
     with open(path, 'r') as f:
@@ -25,22 +26,20 @@ def get_info_from_seqinfo(vid = "02", path = None) -> dict:
     return seqinfo
 
 def get_frame(vid = "02", fnum = 1) -> Image:
-    """ return frame """
+    """ return frame in train set """
     frame_name = str(fnum).zfill(6)   
     frame_path = TRAIN_PATH / f"{vid}/img1/{frame_name}.jpg"
     return Image.open(frame_path)
 
 def get_frame_test(fnum = 1) -> Image:
-    """ return frame """
+    """ return frame in test set """
     frame_name = str(fnum).zfill(6)   
     frame_path = TEST_PATH / f"img1/{frame_name}.jpg"
     return Image.open(frame_path)
 
 
-# def show_bounding_boxes(frame: Image, boxes: list[list]) -> np.ndarray:
-#     for row in boxes:
-#         [x, y, w, h]
 def show_gt_frame(vid="02", fnum=1, df=None) -> np.ndarray:
+    """ read from train set and draw bound boxes """
     frame = get_frame(vid, fnum)
     frame = np.array(frame)  # Convert PIL Image to NumPy array if needed
     
