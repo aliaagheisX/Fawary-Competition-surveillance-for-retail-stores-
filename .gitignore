@@ -174,3 +174,8 @@ cython_debug/
 datasets/
 models/
 embeddings/
+wandb/
+submissions/
+src/FasterRcnn/outputs/
+*.pth.tar
+*.pt

@@ -2,7 +2,7 @@ import os
 import sys
 import json
 from pathlib import Path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '.')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from constants import TRAIN_PATH, TEST_PATH
 from utils import get_info_from_seqinfo, get_frame, get_frame_test
 
@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 
 # Fnum, tracker_id, x, y, w, h, confidence, -1, -1, -1
-def predict_video(get_detections_fn, th=0.5):
+def predict_video(get_detections_fn, th=0.7):
     seqlen = len(list(TEST_PATH.rglob("*.jpg")))
     
     data = []
@@ -41,8 +41,8 @@ def predict_video(get_detections_fn, th=0.5):
 
 
 if __name__ == "__main__":
-    get_detections_fn = get_rcnn_detections_fn()
-    df = predict_video(get_detections_fn, th=0.7)
+    get_detections_fn = get_rcnn_detections_fn(model_name = "fastercnn_batch_8_epoch_4.pth.tar")
+    df = predict_video(get_detections_fn)
     
-    df.to_csv("fasterrcnn_batch8_freeze_test_th07.csv", header=None, index=None)
+    df.to_csv(f"src/FasterRcnn/outputs/fastercnn_batch_8_epoch_4_test.csv", header=None, index=None)
     

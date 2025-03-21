@@ -3,7 +3,7 @@ import sys
 import json
 from pathlib import Path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '.')))
-from constants import TRAIN_PATH, TEST_PATH
+from constants import TRAIN_PATH, TEST_PATH, DATA_DIR
 
 import pandas as pd
 
@@ -21,3 +21,7 @@ gt_v05["vid"] = "05"
 
 df_train = pd.concat([gt_v02, gt_v03, gt_v05])
 df_train.columns = ["fnum", "id", "x", "y", "w", "h", "conf", "class", "visibility", "vid"]
+
+
+df_test = pd.read_csv(DATA_DIR / "test_gt.txt", header=None)
+df_test.columns = ["fnum", "id", "x", "y", "w", "h", "conf", "class", "visibility"]

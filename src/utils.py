@@ -6,6 +6,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '.')))
 from constants import TRAIN_PATH, TEST_PATH
 
 import cv2
+import wandb
 import torchvision
 import numpy as np
 from PIL import Image
@@ -71,7 +72,20 @@ def show_images(x):
     grid_im = Image.fromarray(np.array(grid_im).astype(np.uint8))
     return grid_im
 
-
+def build_wandb_run(config=None, project_name="fawary_retail_store", wandb_dir=Path("wandb")):
+    # Ensure the local directory exists
+    wandb_dir.mkdir(exist_ok=True, parents=True)
+    # Initialize wandb run with local mode
+    override_settings = {"_disable_service": True}  # Ensures local logging only
+    run = wandb.init(
+        project=project_name, 
+        dir=wandb_dir, 
+        config=config, 
+        settings=wandb.Settings(**override_settings)
+    )
+    return run
+    
+    
 if __name__ == "__main__":
     get_frame().show()
     get_frame_test().show()

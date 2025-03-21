@@ -26,11 +26,11 @@ def get_detections_from_rcnn_results(results, threshold = 0.5):
         xyxy=boxes, confidence=confidence, class_id=labels
     )
 
-def get_rcnn_detections_fn():
+def get_rcnn_detections_fn(model_name = "fastrcnn_freeze_8batchs_3epochs.pth"):
     """ return function pass image to get  """
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model  = fasterrcnn_resnet50_fpn(weights=FasterRCNN_ResNet50_FPN_Weights.DEFAULT).to(device)
-    checkpoint = torch.load(MODEL_DIR / "fastrcnn_freeze_8batchs_3epochs.pth")
+    checkpoint = torch.load(MODEL_DIR /model_name)
     model.load_state_dict(checkpoint['model_state_dict'])
     
     tracker = sv.ByteTrack() # to track IDs
