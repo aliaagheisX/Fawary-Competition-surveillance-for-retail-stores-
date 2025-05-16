@@ -172,6 +172,7 @@ cython_debug/
 
 
 datasets/
+
 models/
 embeddings/
 wandb/
